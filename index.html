@@ -6,9 +6,15 @@
     <meta name="theme-color" content="#0b1018" />
     <meta name="description" content="Open Quant Terminal — independent charting and quantitative research workspace." />
     <title>Open Quant Terminal</title>
+    <style>
+      html, body, #root { min-height: 100%; margin: 0; }
+      html, body { min-width: 320px; background: #0b1018; color: #e9edf5; }
+      body { min-height: 100vh; font-family: system-ui, sans-serif; }
+      #startup-status { padding: 24px; color: #a3e635; font-size: 14px; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><div id="startup-status">Starting Open Quant Terminal…</div></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
