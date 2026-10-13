@@ -1,65 +1,66 @@
 # Open Quant Terminal
 
-A free-first, TradingView-inspired multi-market charting and quant research platform. This project is an independent implementation; it does not copy TradingView's proprietary source code or use unauthorized private endpoints.
+A free-first, TradingView-inspired multi-market charting and quant research platform. This is an independent implementation; it does not copy TradingView's proprietary source code or use unauthorized private endpoints.
 
 ## Project goals
-- Interactive candlestick charts using TradingView Lightweight Charts (respect its license and attribution requirements).
+- Interactive candlestick charts using TradingView Lightweight Charts, respecting its license and attribution requirements.
 - Crypto market data first, using documented public endpoints and provider adapters.
 - Indicators, drawing tools, watchlists, screeners and alerts.
 - Paper trading before any live trading integration.
 - Historical backtesting with fees, slippage, position sizing and drawdown metrics.
 - Later support for equities, FX and commodities through providers whose terms permit the intended usage.
-- Responsive UI for desktop and mobile; public free platform with a modular, testable architecture.
+- Responsive desktop/mobile UI and a modular, testable architecture.
 
-## Proposed stack
-- Frontend: React, TypeScript, Vite.
-- Charting: TradingView Lightweight Charts.
-- Styling: CSS/Tailwind (choose after checking the existing project needs).
-- Backend: Node.js + TypeScript + Fastify when server-side features are needed.
-- Database: PostgreSQL + Prisma when persistence is introduced.
-- Tests: Vitest; add type checking, linting and build checks early.
-- Hosting: use the owner's existing hosting; verify runtime and data-provider terms before launch.
+## Stack
+- Frontend: React, TypeScript and Vite.
+- Charting: TradingView Lightweight Charts (Phase 2).
+- Tests: Vitest + Testing Library; TypeScript check and production build are CI gates.
+- Future backend: Node.js + TypeScript + Fastify, only when server-side features are introduced.
+- Future persistence: PostgreSQL + Prisma, once user data must persist across devices.
 
-## Phased delivery and quality gates
-1. **Repository and environment** — baseline files, Node/npm versions, scripts and Git hygiene. Confirm a clean install and production build.
-2. **UI shell and chart** — responsive terminal layout, symbol/timeframe controls and chart. Test desktop/mobile layouts and chart initialization.
-3. **Market data adapter** — historical candles and graceful loading/error/empty states. Validate response shape, timestamps, ordering and missing data.
-4. **Indicators and drawings** — add/remove indicators and basic drawing tools. Unit-test calculations and verify interactions.
-5. **Watchlists and screener** — symbol search, list state and filter logic. Test empty results, invalid filters and persistence.
-6. **Alerts** — threshold/rule model and trigger evaluation. Test boundary cases and duplicate-trigger protection.
-7. **Paper trading** — simulated orders, positions, P&L and balances; no real funds. Test order validation, fills, fees and ledger invariants.
-8. **Backtesting** — deterministic historical simulation, fees, slippage, equity curve and drawdowns. Test against hand-calculated sample fixtures and prevent look-ahead bias.
-9. **More markets and data providers** — add equities/FX/commodities only after checking current availability, quotas, licensing and public redistribution terms.
-10. **Hardening and release** — security review, accessibility, rate limits, observability, mobile QA and deployment smoke tests.
+## Phased roadmap
+1. **Foundation** — repository, responsive dashboard shell, error fallback, TypeScript, smoke tests and CI.
+2. **Chart workspace** — Lightweight Charts, symbol/timeframe controls and responsive chart interactions.
+3. **Market data** — validated historical candles and graceful loading/error/empty states.
+4. **Indicators and drawings** — indicator calculations and basic drawing tools.
+5. **Watchlist and screener** — symbol search, saved lists and filter logic.
+6. **Alerts** — rules, thresholds and duplicate-trigger protection.
+7. **Paper trading** — simulated orders, positions, P&L, balances and fees; no real funds.
+8. **Backtesting** — deterministic historical simulation, fees, slippage, equity curve and drawdowns.
+9. **Additional markets** — equities/FX/commodities only after provider quotas, licensing and redistribution terms are checked.
+10. **Hardening and release** — security, accessibility, observability and deployment checks.
 
-Each phase must end with: (1) install check, (2) typecheck/lint if configured, (3) unit tests, (4) production build, (5) manual smoke test, and (6) a short changelog noting unresolved issues. Never claim a phase passed unless the commands were actually run.
+Every phase gets a clean install, typecheck, unit tests, production build and manual smoke test. Fix failures before moving on; never report a check as passed unless it ran.
 
 ## Working rules
-- Work in small commits; avoid mixing unrelated phases.
-- Never commit API keys, credentials, private user data or populated production databases.
-- Use environment variables for configuration; commit only a sanitized `.env.example`.
-- Prefer documented, authorized APIs. Do not scrape private endpoints or reproduce proprietary code/assets.
-- Free API access does not automatically allow unlimited real-time usage or redistribution; check the provider's current terms and quotas.
-- Paper trading is the default. Any future live integration must be explicitly scoped and separately tested.
-- Surface errors with actionable messages; never silently replace real market data with fabricated values.
+- Make small, phase-scoped commits.
+- Never commit credentials, API keys or private data. Use a sanitized `.env.example` if configuration is needed.
+- Use documented, authorized APIs; do not scrape private endpoints or reproduce proprietary source/assets.
+- Free API access does not automatically permit unlimited real-time use or public redistribution. Check current provider terms and quotas.
+- Label simulated data clearly. Do not invent prices or imply a data connection exists when it does not.
+- Paper trading remains the default until live trading is explicitly scoped and separately tested.
 
 ## Current status
-- [x] Repository checked; default branch is `main`.
-- [x] Project scope and phase gates documented.
-- [ ] Phase 1: inspect local environment, bootstrap the application, and establish a passing baseline.
+- [x] Repository and environment plan documented.
+- [x] React + TypeScript + Vite foundation added.
+- [x] Responsive dashboard shell and render-error fallback added.
+- [x] Automated dashboard and error-fallback smoke tests added.
+- [x] CI checks TypeScript, tests and production build.
+- [ ] Phase 1 local visual confirmation on Windows/mobile remains pending.
 
-## Phase 1: start locally (Windows 11 / VS Code)
-Open the VS Code terminal in the folder where you want the project and run:
+## Phase 1 local commands (Windows 11 / VS Code)
+Run from the existing repository folder:
 
 ```powershell
-node -v
-npm -v
-git --version
-git clone https://github.com/Shakir120795/tradingview.git
-cd tradingview
+git pull origin main
+npm install
+npm run typecheck
+npm test
+npm run build
+npm run dev
 ```
 
-The repository is currently empty, so the app bootstrap is the next implementation step. Share the version command output before choosing compatible package versions. Then initialize React + TypeScript + Vite, install dependencies, and run tests/build before committing.
+Open the localhost URL printed by Vite. The dashboard currently uses explicit placeholders; real chart and market data are Phase 2/3, not part of the foundation phase.
 
 ## License note
-This repository should declare a project license before external reuse. Dependencies retain their own licenses; review them before distribution.
+A project license should be selected before external reuse. Dependencies retain their own licenses; review them before distribution.
